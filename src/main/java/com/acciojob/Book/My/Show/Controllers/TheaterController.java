@@ -4,10 +4,9 @@ import com.acciojob.Book.My.Show.Request.AddTheaterRequest;
 import com.acciojob.Book.My.Show.Request.AddTheaterSeatsRequest;
 import com.acciojob.Book.My.Show.Services.TheaterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("theater")
@@ -21,6 +20,16 @@ public class TheaterController {
 
         String result = theaterService.addTheater(addTheaterRequest);
         return result;
+    }
+
+    @DeleteMapping("removeTheater")
+    public ResponseEntity removeTheater(@RequestParam("theaterId") Integer theaterId){
+        try {
+            String result = theaterService.removeTheater(theaterId);
+            return new ResponseEntity(result, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 

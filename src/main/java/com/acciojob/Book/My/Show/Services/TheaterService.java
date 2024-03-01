@@ -1,5 +1,6 @@
 package com.acciojob.Book.My.Show.Services;
 
+import com.acciojob.Book.My.Show.CustomException.InvalidTheaterId;
 import com.acciojob.Book.My.Show.Entities.Theater;
 import com.acciojob.Book.My.Show.Entities.TheaterSeat;
 import com.acciojob.Book.My.Show.Enums.SeatType;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TheaterService {
@@ -25,6 +27,17 @@ public class TheaterService {
 
         theater = theaterRepository.save(theater);
         return "Theater has been saved to DB with theaterId"+theater.getTheaterId();
+    }
+    public String removeTheater(int theaterId) throws Exception{
+
+        Optional<Theater> optionalTheater = theaterRepository.findById(theaterId);
+
+        if(optionalTheater.isEmpty())
+            throw new InvalidTheaterId("TheaterId not present");
+
+        Theater theater = optionalTheater.get();
+        theaterRepository.delete(theater);
+        return "Theater has been removed from DB with theaterId"+theater.getTheaterId();
     }
 
 

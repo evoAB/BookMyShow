@@ -1,10 +1,13 @@
 package com.acciojob.Book.My.Show.Services;
 
+import com.acciojob.Book.My.Show.CustomException.InvalidUserId;
 import com.acciojob.Book.My.Show.Entities.User;
 import com.acciojob.Book.My.Show.Repository.UserRepository;
 import com.acciojob.Book.My.Show.Request.AddUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,6 +23,17 @@ public class UserService {
 
         userRepository.save(user);
         return "User has been saved to the DB";
+
+    }
+
+    public String removeUser(int userId) throws Exception{
+        Optional<User> optionalUser=userRepository.findById(userId);
+        if(optionalUser.isEmpty())
+            throw new InvalidUserId("UserId not present");
+
+        User user=optionalUser.get();
+        userRepository.delete(user);
+        return "User has been deleted from the DB";
 
     }
 }
