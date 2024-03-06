@@ -21,8 +21,8 @@ public class UserService {
                 .name(addUserRequest.getName())
                 .build();
 
-        userRepository.save(user);
-        return "User has been saved to the DB";
+        User savedUser = userRepository.save(user);
+        return "User has been saved to the DB with UserId : "+savedUser.getUserId();
 
     }
 

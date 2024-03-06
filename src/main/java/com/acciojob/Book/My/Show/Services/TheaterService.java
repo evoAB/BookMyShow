@@ -26,7 +26,7 @@ public class TheaterService {
         Theater theater = TheaterTransformers.convertRequestToEntity(theaterRequest);
 
         theater = theaterRepository.save(theater);
-        return "Theater has been saved to DB with theaterId"+theater.getTheaterId();
+        return "Theater has been saved to DB with theaterId : "+theater.getTheaterId();
     }
     public String removeTheater(int theaterId) throws Exception{
 
